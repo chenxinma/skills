@@ -61,24 +61,27 @@ The system supports three data sources:
 
 ### Example Commands
 
+脚本调用方式（必须直接执行，不要用 `uv run python` 或 `python`）：
+
+
 Basic usage with default parameters (NetEase source):
 ```bash
-python skills/etf-grid-trading/scripts/grid_trading.py --symbol 510050.SH --days 90
+./skills/etf-grid-trading/scripts/grid_trading.py --symbol 510050.SH --days 90
 ```
 
 With JSON output (for further processing):
 ```bash
-python skills/etf-grid-trading/scripts/grid_trading.py --symbol 000001.SZ --days 60 --output json --source netease
+./skills/etf-grid-trading/scripts/grid_trading.py --symbol 000001.SZ --days 60 --output json --source netease
 ```
 
 CSV formatted output:
 ```bash
-python skills/etf-grid-trading/scripts/grid_trading.py --symbol 510500.SH --days 180 --output csv --source akshare
+./skills/etf-grid-trading/scripts/grid_trading.py --symbol 510500.SH --days 180 --output csv --source akshare
 ```
 
 With TuShare (requires token):
 ```bash
-python skills/etf-grid-trading/scripts/grid_trading.py --symbol 510050.SH --days 90 --source tushare --token YOUR_TOKEN
+./skills/etf-grid-trading/scripts/grid_trading.py --symbol 510050.SH --days 90 --source tushare --token YOUR_TOKEN
 ```
 
 ## Key Metrics Explained
