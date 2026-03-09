@@ -25,15 +25,15 @@ Calculates key grid trading parameters based on historical market data:
 
 ## Prerequisites
 
-- Python environment with required packages: numpy, pandas, requests, tushare, akshare
-- Valid data source access (TuShare token for tushare, internet for akshare/netease)
+- Python environment with required packages: numpy, pandas, requests
+- Optional: akshare (for AKShare data source), tushare (for TuShare data source)
 - Symbols must use Chinese exchange format (e.g., 000001.SZ, 510050.SH)
 
 ## Data Sources
 
 The system supports three data sources:
 
-### NetEase Finance
+### NetEase Finance (Default)
 - Free and stable API
 - Format: `.SH` (Shanghai) or `.SZ` (Shenzhen)
 - No authentication required
@@ -43,12 +43,12 @@ The system supports three data sources:
 - High-quality open-source Chinese market data
 - No authentication required
 - Comprehensive historical data
-- Default recommended source
+- Requires `akshare` package installed
 
 ### TuShare
 - Requires API token
 - More comprehensive data
-- Need to set TuShare token in .env file
+- Requires `tushare` package and valid token
 - Higher rate limits
 
 ## Usage Pattern
@@ -61,19 +61,24 @@ The system supports three data sources:
 
 ### Example Commands
 
-Basic usage with default parameters:
+Basic usage with default parameters (NetEase source):
 ```bash
-uv run python -m etf_quant.cli.main --symbol 510050.SH --days 90 --source tushare
+python skills/etf-grid-trading/scripts/grid_trading.py --symbol 510050.SH --days 90
 ```
 
 With JSON output (for further processing):
 ```bash
-uv run python -m etf_quant.cli.main --symbol 000001.SZ --days 60 --output json --source netease
+python skills/etf-grid-trading/scripts/grid_trading.py --symbol 000001.SZ --days 60 --output json --source netease
 ```
 
 CSV formatted output:
 ```bash
-uv run python -m etf_quant.cli.main --symbol 510500.SH --days 180 --output csv --source akshare
+python skills/etf-grid-trading/scripts/grid_trading.py --symbol 510500.SH --days 180 --output csv --source akshare
+```
+
+With TuShare (requires token):
+```bash
+python skills/etf-grid-trading/scripts/grid_trading.py --symbol 510050.SH --days 90 --source tushare --token YOUR_TOKEN
 ```
 
 ## Key Metrics Explained

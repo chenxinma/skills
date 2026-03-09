@@ -1,24 +1,25 @@
-#!/usr/bin/env python3
-"""
-邮件批量发送工具 - 指标填报专用
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#     "filetype",
+# ]
+# ///
+"""邮件批量发送工具 - 指标填报专用。"""
 
-此脚本按照指标填报_mail_template.json格式处理邮件模板，
-每个模板条目包含：内容、附件、部门、收件人、主题。
-"""
-
+import argparse
+import filetype
 import json
 import os
 import re
-from email.mime.multipart import MIMEMultipart
-from email.mime.application import MIMEApplication
-from email.mime.text import MIMEText
-from email.mime.base import MIMEBase
-from email.header import Header
-from email import encoders
 import smtplib
-import argparse
-import filetype
-from typing import List, Dict, Any, Optional
+from email import encoders
+from email.mime.application import MIMEApplication
+from email.mime.base import MIMEBase
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.header import Header
+from typing import Any, Dict, List, Optional
 
 
 def parse_receivers(receivers_str: str) -> List[str]:
@@ -85,20 +86,25 @@ class EmailSender:
             # 检测文件类型
             kind = filetype.guess(attachment_path)
             if kind:
-                maintype, subtype = kind.mime.split('/')
-                with open(attachment_path, 'rb') as file:
+                maintype, subtype = kind.mime.split("/")
+                with open(attachment_path, "rb") as file:
                     part = MIMEBase(maintype, subtype, name=file_name)
                     part.set_payload(file.read())
                 # 对附件进行编码
                 encoders.encode_base64(part)
-                part.add_header('Content-Disposition', 'attachment', filename=Header(file_name, 'utf-8').encode())
+                part.add_header(
+                    "Content-Disposition",
+                    "attachment",
+                    filename=Header(file_name, "utf-8").encode(),
+                )
             else:
                 # 如果无法检测到文件类型，使用默认的 MIMEApplication
                 with open(attachment_path, "rb") as file:
                     part = MIMEApplication(file.read(), name=file_name)
-                part['Content-Disposition'] = f'attachment; filename="{Header(file_name, "utf-8").encode()}"'
+                part["Content-Disposition"] = (
+                    f'attachment; filename="{Header(file_name, "utf-8").encode()}"'
+                )
             msg.attach(part)
-
 
         server = self._get_smtp_connection()
         text = msg.as_string()

@@ -4,16 +4,32 @@
 This skill enables users to calculate optimized grid trading parameters for stocks and ETFs using historical market data and volatility analysis.
 
 ## Files Included
-etf-grid-trading-skill
 ### Core Skill Definition
-- `SKILL.md`: Main skill definition with usage instructions, prerequisites, and data source information
+- `SKILL.md`: Main skill definition with usage instructions and data source information
+
+### Scripts
+- `scripts/grid_trading.py`: Self-contained grid trading parameter optimizer (no external etf-quant dependency)
 
 ### Reference Materials
 - `references/strategy_guide.md`: Detailed explanation of grid trading methodology and interpretation guidance
-- `references/sample_symbols.md`: Valid ETF/stock symbols with examples of how to use the tool
+- `references/sample_symbols.md`: Valid ETF/stock symbols with examples
 
-## How to Deploy
+## How to Use
 
-1. The skill is ready to use as-is in skill-enabled environments
-2. The resulting `.skill` file can be distributed or imported by skill-capable agents
-3. Test with `uv run python -m etf_quant.cli.main --symbol 510050.SH --days 90 --source akshare` to verify functionality
+```bash
+# Basic usage with NetEase (default, no auth required)
+python skills/etf-grid-trading/scripts/grid_trading.py --symbol 510050.SH --days 90
+
+# With JSON output
+python skills/etf-grid-trading/scripts/grid_trading.py --symbol 000001.SZ --days 60 --output json
+
+# With AKShare (requires akshare package)
+python skills/etf-grid-trading/scripts/grid_trading.py --symbol 510300.SH --days 180 --source akshare
+```
+
+## Dependencies
+```bash
+pip install numpy pandas requests
+# Optional: for additional data sources
+pip install akshare tushare
+```

@@ -1,13 +1,13 @@
-#!/usr/bin/env python3
-"""
-邮件模板渲染器 - 指标填报专用
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.11"
+# dependencies = []
+# ///
+"""邮件模板渲染器 - 指标填报专用。"""
 
-此脚本仅负责将指标填报模板中的占位符替换为实际内容
-"""
-
-import json
 import argparse
-from typing import Dict, Any
+import json
+from typing import Any, Dict
 
 
 def replace_placeholders(content: str, placeholders: Dict[str, Any]) -> str:
