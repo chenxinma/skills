@@ -33,7 +33,22 @@
 
 ---
 
-### 3. ETF Grid Trading Optimizer
+### 3. Email Fetch Latest
+
+**功能**: 独立邮件收取功能
+
+- IMAP EmailClient 完整实现
+- 从 IMAP 服务器同步最新邮件
+- JSON 格式存储到 assets 目录
+- 支持增量获取和索引管理
+
+**适用场景**: 需要独立收取邮件到本地，不依赖外部 API
+
+**文档**: [`skills/email-fetch-latest/SKILL.md`](skills/email-fetch-latest/SKILL.md)
+
+---
+
+### 4. ETF Grid Trading Optimizer
 
 **功能**: ETF/股票网格交易参数优化
 
@@ -82,14 +97,16 @@ skills/
 │   ├── scripts/
 │   │   └── email_client.py   # Python 客户端示例
 │   └── references/
-│       └── ag-ui.md          # ag_ui 协议参考文档
+│       └── ag_ui.md          # ag_ui 协议参考文档
+├── email-fetch-latest/
+│   ├── SKILL.md
+│   └── scripts/
+│       └── fetch_latest_emails.py  # IMAP 邮件收取脚本
 ├── email-templater/
 │   ├── SKILL.md
-│   ├── scripts/
-│   │   ├── send_batch_emails.py
-│   │   └── render_template.py
-│   ├── test_skill.py
-│   └── package_skill.py
+│   └── scripts/
+│       ├── send_batch_emails.py
+│       └── render_template.py
 └── etf-grid-trading/
     ├── SKILL.md
     ├── README.md
