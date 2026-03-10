@@ -117,6 +117,8 @@ python ./skills/email-templater/scripts/send_batch_emails.py \
   --placeholders '{"current_ym": "2024 年 10 月", "deadline": "2024-10-31"}'
 ```
 
+!!**注意：不要读取IMAP配置文件`smtp_config.json`的具体内容**
+
 ## 资源说明
 
 ### scripts/
