@@ -274,6 +274,26 @@ def save_last_uids(last_uids: Dict[str, int], last_uid_file: Path):
         json.dump(last_uids, f, indent=2, ensure_ascii=False)
 
 
+def copy_tag_definitions(tags_config_path: Optional[str], output_dir: Path):
+    """复制标签定义到输出目录"""
+    if not tags_config_path:
+        return
+
+    tags_path = Path(tags_config_path)
+    if not tags_path.exists():
+        print(f"  ⚠ 标签配置文件不存在：{tags_path}")
+        return
+
+    output_file = output_dir / "tag_definitions.json"
+    with open(tags_path, "r", encoding="utf-8") as f:
+        tags_data = json.load(f)
+
+    with open(output_file, "w", encoding="utf-8") as f:
+        json.dump(tags_data, f, ensure_ascii=False, indent=2)
+
+    print(f"  ✓ 已输出标签定义到 {output_file}")
+
+
 def save_emails_to_json(emails: List[Email], output_dir: Path, folder: str):
     """保存邮件到 JSON 文件"""
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -372,6 +392,13 @@ def main():
         help="最后 UID 记录文件 (默认：{output}/last_uid.json)",
     )
 
+    parser.add_argument(
+        "--tags-config",
+        type=str,
+        default=None,
+        help="标签配置文件路径，用于输出标签定义到输出目录",
+    )
+
     args = parser.parse_args()
 
     # 加载配置
@@ -410,6 +437,9 @@ def main():
         # 输出目录
         output_dir = Path(args.output)
         output_dir.mkdir(parents=True, exist_ok=True)
+
+        # 复制标签定义
+        copy_tag_definitions(args.tags_config, output_dir)
 
         # 最后 UID 文件
         last_uid_file = (

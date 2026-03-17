@@ -101,6 +101,8 @@ class Email:
 
 ```
 assets/emails/
+├── tag_definitions.json    # 标签定义（使用 --tags-config 时生成）
+├── last_uid.json           # 最后 UID 记录
 ├── INBOX/
 │   ├── 12345.json
 │   ├── 12346.json
@@ -109,6 +111,17 @@ assets/emails/
     ├── 67890.json
     └── index.json
 ```
+
+### 标签定义文件 (tag_definitions.json)
+
+当使用 `--tags-config` 参数时，会将指定的标签配置文件复制到输出目录：
+
+```bash
+./skills/email-fetch-latest/scripts/fetch_latest_emails.py \
+  --config data/config.json --tags-config data/tags.json
+```
+
+这会在 `assets/emails/tag_definitions.json` 生成标签定义，供后续邮件分类流程使用。
 
 ### 单个邮件 JSON 格式
 
@@ -164,6 +177,10 @@ assets/emails/
 # 指定文件夹
 ./skills/email-fetch-latest/scripts/fetch_latest_emails.py \
   --config data/config.json --folders "INBOX,Sent"
+
+# 输出标签定义（用于邮件分类）
+./skills/email-fetch-latest/scripts/fetch_latest_emails.py \
+  --config data/config.json --tags-config data/tags.json
 ```
 
 ## 脚本参数
@@ -175,6 +192,7 @@ assets/emails/
 | `--output` | `-o` | 输出目录 | `assets/emails` |
 | `--folders` | `-f` | 要收取的文件夹（逗号分隔） | 配置文件中的 indexedFolders |
 | `--last-uid-file` | | 最后 UID 记录文件 | `{output}/last_uid.json` |
+| `--tags-config` | | 标签配置文件路径，复制到输出目录 | 无 |
 
 ## 增量获取策略
 
